@@ -46,3 +46,7 @@ ip route
 # harbor
 
 The initial `terraform apply` may fail when creating harbor registries, simply run the apply again and it should work.
+
+# get kubeconfig
+
+`talosctl kubeconfig -i -n 10.1.1.5 --talosconfig=./talosconfig`

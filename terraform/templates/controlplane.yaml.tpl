@@ -247,7 +247,6 @@ cluster:
   externalCloudProvider:
     enabled: true
     manifests:
-    - https://raw.githubusercontent.com/randsw/proxmox-capi-talos/main/manifests/fluxcd-kustomization.yaml #FluxCD kustomization and initialize GitReposytory with manifest to sync
     - https://raw.githubusercontent.com/chrismgonzalez/home-kubernetes-service/main/manifests/talos/coredns-local.yaml
     - https://raw.githubusercontent.com/metallb/metallb/v0.13.9/config/manifests/metallb-native.yaml       #MetalLB deploy
     - https://github.com/kubernetes-sigs/metrics-server/releases/latest/download/components.yaml           #Deploy metrics server

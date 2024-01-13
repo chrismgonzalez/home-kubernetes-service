@@ -1,5 +1,13 @@
 resource "talos_machine_secrets" "secrets" {}
 
+# data "talos_cluster_kubeconfig" "kubeconfig" {
+#   depends_on = [
+#     talos_machine_bootstrap.bootstrap
+#   ]
+#   client_configuration = talos_machine_secrets.secrets.client_configuration
+#   node                 = var.first_ip
+# }
+
 data "talos_machine_configuration" "mc_1" {
   cluster_name       = var.cluster_name
   machine_type       = "controlplane"
