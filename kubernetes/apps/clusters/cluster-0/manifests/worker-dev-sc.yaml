@@ -47,26 +47,26 @@ spec:
       value:
         - 169.254.2.53
         - 10.96.0.10
-    - op: replace
-      path: /machine/registries/mirrors
-      value:
-        docker.io:
-          endpoints:
-            - http://${CACHE_REGISTRY}/v2/proxy-docker.io
-          overridePath: true
-        ghcr.io:
-          endpoints:
-            - http://${CACHE_REGISTRY}/v2/proxy-ghcr.io
-          overridePath: true
-        gcr.io:
-          endpoints:
-            - http://${CACHE_REGISTRY}/v2/proxy-gcr.io
-          overridePath: true
-        registry.k8s.io:
-          endpoints:
-            - http://${CACHE_REGISTRY}/v2/proxy-registry.k8s.io
-          overridePath: true
-        quay.io:
-          endpoints:
-            - http://${CACHE_REGISTRY}/v2/proxy-quay.io
-          overridePath: true
+    # - op: replace
+    #   path: /machine/registries/mirrors
+    #   value:
+    #     docker.io:
+    #       endpoints:
+    #         - http://${CACHE_REGISTRY}/v2/proxy-docker.io
+    #       overridePath: true
+    #     ghcr.io:
+    #       endpoints:
+    #         - http://${CACHE_REGISTRY}/v2/proxy-ghcr.io
+    #       overridePath: true
+    #     gcr.io:
+    #       endpoints:
+    #         - http://${CACHE_REGISTRY}/v2/proxy-gcr.io
+    #       overridePath: true
+    #     registry.k8s.io:
+    #       endpoints:
+    #         - http://${CACHE_REGISTRY}/v2/proxy-registry.k8s.io
+    #       overridePath: true
+    #     quay.io:
+    #       endpoints:
+    #         - http://${CACHE_REGISTRY}/v2/proxy-quay.io
+    #       overridePath: true

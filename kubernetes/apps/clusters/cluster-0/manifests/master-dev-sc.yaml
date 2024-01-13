@@ -41,7 +41,7 @@ spec:
       value:
         name: "custom"
         urls:
-          - "https://raw.githubusercontent.com/chrismgonzalez/home-kubernetes-service/main/manifests/talos/cilium.yaml"
+          - "https://raw.githubusercontent.com/chrismgonzalez/home-kubernetes-service/main/manifests/talos/cilium-result.yaml"
     - op: replace
       path: /cluster/proxy
       value:
@@ -73,26 +73,26 @@ spec:
         - https://raw.githubusercontent.com/chrismgonzalez/home-kubernetes-service/main/manifests/talos/coredns-local.yaml
         - https://raw.githubusercontent.com/chrismgonzalez/home-kubernetes-service/main/manifests/talos/metallb-native.yaml
         - https://raw.githubusercontent.com/chrismgonzalez/home-kubernetes-service/main/manifests/talos/metrics-server.yaml
-    - op: replace
-      path: /machine/registries/mirrors
-      value:
-        docker.io:
-          endpoints:
-            - http://${CACHE_REGISTRY}/v2/proxy-docker.io
-          overridePath: true
-        ghcr.io:
-          endpoints:
-            - http://${CACHE_REGISTRY}/v2/proxy-ghcr.io
-          overridePath: true
-        gcr.io:
-          endpoints:
-            - http://${CACHE_REGISTRY}/v2/proxy-gcr.io
-          overridePath: true
-        registry.k8s.io:
-          endpoints:
-            - http://${CACHE_REGISTRY}/v2/proxy-registry.k8s.io
-          overridePath: true
-        quay.io:
-          endpoints:
-            - http://${CACHE_REGISTRY}/v2/proxy-quay.io
-          overridePath: true
+    # - op: replace
+    #   path: /machine/registries/mirrors
+    #   value:
+    #     docker.io:
+    #       endpoints:
+    #         - http://${CACHE_REGISTRY}/v2/proxy-docker.io
+    #       overridePath: true
+    #     ghcr.io:
+    #       endpoints:
+    #         - http://${CACHE_REGISTRY}/v2/proxy-ghcr.io
+    #       overridePath: true
+    #     gcr.io:
+    #       endpoints:
+    #         - http://${CACHE_REGISTRY}/v2/proxy-gcr.io
+    #       overridePath: true
+    #     registry.k8s.io:
+    #       endpoints:
+    #         - http://${CACHE_REGISTRY}/v2/proxy-registry.k8s.io
+    #       overridePath: true
+    #     quay.io:
+    #       endpoints:
+    #         - http://${CACHE_REGISTRY}/v2/proxy-quay.io
+    #       overridePath: true
