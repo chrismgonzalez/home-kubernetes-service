@@ -111,7 +111,7 @@ cluster:
     cni:
       name: custom
       urls:
-        - https://raw.githubusercontent.com/chrismgonzalez/home-kubernetes-service/main/manifests/talos/cilium.yaml
+        - https://raw.githubusercontent.com/chrismgonzalez/home-kubernetes-service/main/manifests/talos/cilium-result.yaml
   proxy:
     disabled: true
   etcd:

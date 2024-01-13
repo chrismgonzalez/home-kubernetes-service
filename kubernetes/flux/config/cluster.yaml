@@ -9,7 +9,7 @@ spec:
   interval: 30m
   url: ssh://git@github.com/chrismgonzalez/home-kubernetes-service/
   ref:
-    branch: kaas-demo
+    branch: main
   secretRef:
     name: github-creds
   ignore: |
