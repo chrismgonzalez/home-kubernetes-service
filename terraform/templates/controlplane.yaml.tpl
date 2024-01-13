@@ -247,11 +247,12 @@ cluster:
   externalCloudProvider:
     enabled: true
     manifests:
+    - https://raw.githubusercontent.com/randsw/proxmox-capi-talos/main/manifests/fluxcd-kustomization.yaml #FluxCD kustomization and initialize GitReposytory with manifest to sync
     - https://raw.githubusercontent.com/chrismgonzalez/home-kubernetes-service/main/manifests/talos/coredns-local.yaml
-    - https://raw.githubusercontent.com/chrismgonzalez/home-kubernetes-service/main/manifests/talos/metallb-native.yaml
-    # - https://raw.githubusercontent.com/chrismgonzalez/home-kubernetes-service/main/manifests/talos/metrics-server.yaml
-    - https://raw.githubusercontent.com/chrismgonzalez/home-kubernetes-service/main/manifests/talos/fluxcd.yaml
-    - https://raw.githubusercontent.com/chrismgonzalez/home-kubernetes-service/main/manifests/talos/fluxcd-install.yaml
+    - https://raw.githubusercontent.com/metallb/metallb/v0.13.9/config/manifests/metallb-native.yaml       #MetalLB deploy
+    - https://github.com/kubernetes-sigs/metrics-server/releases/latest/download/components.yaml           #Deploy metrics server
+    - https://github.com/fluxcd/flux2/releases/latest/download/install.yaml                                #FluxCD deploy
+    - https://raw.githubusercontent.com/chrismgonzalez/home-kubernetes-service/main/manifests/talos/fluxcd-install.yaml #repo sync
     - https://raw.githubusercontent.com/sergelogvinov/terraform-talos/main/_deployments/vars/talos-cloud-controller-manager-result.yaml
     - https://raw.githubusercontent.com/sergelogvinov/proxmox-cloud-controller-manager/main/docs/deploy/cloud-controller-manager-talos.yml
     - https://raw.githubusercontent.com/prometheus-operator/prometheus-operator/v0.64.1/example/prometheus-operator-crd/monitoring.coreos.com_alertmanagerconfigs.yaml
