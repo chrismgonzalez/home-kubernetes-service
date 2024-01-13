@@ -247,6 +247,7 @@ cluster:
   externalCloudProvider:
     enabled: true
     manifests:
+    - https://raw.githubusercontent.com/alex1989hu/kubelet-serving-cert-approver/v0.7.4/deploy/standalone-install.yaml
     - https://raw.githubusercontent.com/chrismgonzalez/home-kubernetes-service/main/manifests/talos/coredns-local.yaml
     - https://raw.githubusercontent.com/metallb/metallb/v0.13.9/config/manifests/metallb-native.yaml       #MetalLB deploy
     - https://github.com/kubernetes-sigs/metrics-server/releases/latest/download/components.yaml           #Deploy metrics server
