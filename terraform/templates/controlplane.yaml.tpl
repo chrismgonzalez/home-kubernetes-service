@@ -137,6 +137,14 @@ cluster:
           name: cilium
           labels:
             pod-security.kubernetes.io/enforce: "privileged"
+- name: csi-proxmox
+    contents: |- 
+      apiVersion: v1
+      kind: Namespace
+      metadata:
+          name: cilium
+          labels:
+            pod-security.kubernetes.io/enforce: "privileged"
   - name: d8-system
     contents: |- 
       apiVersion: v1
