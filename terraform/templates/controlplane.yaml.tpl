@@ -260,7 +260,7 @@ cluster:
     # - https://raw.githubusercontent.com/chrismgonzalez/home-kubernetes-service/main/manifests/talos/cert-approval.yaml
     - https://raw.githubusercontent.com/chrismgonzalez/home-kubernetes-service/main/manifests/talos/metallb-native.yaml
     - https://raw.githubusercontent.com/chrismgonzalez/home-kubernetes-service/main/manifests/talos/metrics-server.yaml
-    - https://raw.githubusercontent.com/chrismgonzalez/home-kubernetes-service/main/manifests/talos/fluxcd.yaml
+    - https://raw.githubusercontent.com/chrismgonzalez/home-kubernetes-service/main/manifests/talos/fluxcdv2.yaml
     - https://raw.githubusercontent.com/chrismgonzalez/home-kubernetes-service/main/manifests/talos/flux-install.yaml #repo sync
     - https://raw.githubusercontent.com/sergelogvinov/terraform-talos/main/_deployments/vars/talos-cloud-controller-manager-result.yaml
     - https://raw.githubusercontent.com/sergelogvinov/proxmox-cloud-controller-manager/main/docs/deploy/cloud-controller-manager-talos.yml

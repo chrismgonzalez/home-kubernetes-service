@@ -132,7 +132,7 @@ spec:
     /*
     # include kubernetes directory
     !/kubernetes
-  interval: 30m
+  interval: 3m
   ref:
     branch: main
   secretRef:
