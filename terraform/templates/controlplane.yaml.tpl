@@ -151,14 +151,6 @@ cluster:
           name: csi-proxmox
           labels:
             pod-security.kubernetes.io/enforce: "privileged"
-  - name: d8-system
-    contents: |- 
-      apiVersion: v1
-      kind: Namespace
-      metadata:
-          name: d8-system
-          labels:
-            pod-security.kubernetes.io/enforce: "privileged"
   - name: external-dns
     contents: |- 
       apiVersion: v1
@@ -332,12 +324,8 @@ cluster:
     manifests:
     - https://raw.githubusercontent.com/chrismgonzalez/home-kubernetes-service/main/manifests/talos/coredns-local.yaml
     - https://raw.githubusercontent.com/alex1989hu/kubelet-serving-cert-approver/v0.7.4/deploy/standalone-install.yaml
-    # - https://raw.githubusercontent.com/chrismgonzalez/home-kubernetes-service/main/manifests/talos/cert-approval.yaml
     - https://raw.githubusercontent.com/chrismgonzalez/home-kubernetes-service/main/manifests/talos/metallb-native.yaml
     - https://raw.githubusercontent.com/chrismgonzalez/home-kubernetes-service/main/manifests/talos/metrics-server.yaml
-    # - https://raw.githubusercontent.com/chrismgonzalez/home-kubernetes-service/main/manifests/talos/fluxcd.yaml
-    # - https://raw.githubusercontent.com/chrismgonzalez/home-kubernetes-service/main/manifests/talos/flux-install.yaml #repo sync
-    - https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
     - https://raw.githubusercontent.com/chrismgonzalez/home-kubernetes-service/argocd/manifests/talos/argocd-result.yaml
     - https://raw.githubusercontent.com/chrismgonzalez/home-kubernetes-service/argocd/manifests/talos/argocd-install.yaml
     - https://github.com/cert-manager/cert-manager/releases/download/v1.13.3/cert-manager.crds.yaml
