@@ -29,6 +29,9 @@ data "talos_machine_configuration" "mc_1" {
         px_node          = var.target_node_name
         storageclass     = var.proxmox_storage2
         storageclass-xfs = var.proxmox_storage1
+        cf_token         = var.cloudflare_token
+        cf_email         = var.cloudflare_email
+        cf_domain        = var.cloudflare_domain
         clusters = yamlencode({
           clusters = [
             {

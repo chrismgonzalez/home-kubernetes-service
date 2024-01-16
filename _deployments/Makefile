@@ -32,8 +32,8 @@ create-deployments: ## create templates
     --set=k8sServiceHost="api.cluster.local" \
     --set=k8sServicePort="6443" > vars/cilium-result.yaml
 		
-	# helm template --namespace=kube-system  --version=1.14.5 -f vars/cilium.yaml cilium \
-	# 	cilium/cilium > vars/cilium-result.yaml
+	helm template --namespace=kube-system  --version=1.14.5 -f vars/cilium.yaml cilium \
+		cilium/cilium > vars/cilium-result.yaml
 
 	# helm template --namespace=kube-system -f vars/metrics-server.yaml metrics-server \
 	# 	metrics-server/metrics-server > vars/metrics-server-result.yaml

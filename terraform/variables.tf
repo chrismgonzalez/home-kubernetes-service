@@ -125,3 +125,27 @@ variable "public_key_file_path" {
 variable "known_hosts" {
   type = string
 }
+
+variable "cloudflare_token" {
+  type        = string
+  description = "API token for Cloudflare DNS zone"
+  sensitive   = true
+}
+
+variable "cloudflare_email" {
+  type        = string
+  description = "Email used for cloudflare account"
+  sensitive   = true
+}
+
+variable "cloudflare_domain" {
+  type        = string
+  description = "domain (DNS zone) used for cloudflare account"
+  sensitive   = true
+}
+
+variable "github_token" {
+  type        = string
+  description = "Github personall access token for ArgoCD"
+  sensitive   = true
+}

@@ -1,0 +1,27 @@
+# Custom CA issuer configuration
+# Enable private PKI using a custom CA
+# It creates a ClusterIssuer resource `ca-issuer`
+ca:
+  enabled: true
+
+extraArgs:
+    - --dns01-recursive-nameservers=1.1.1.1:53,9.9.9.9:53
+    - --dns01-recursive-nameservers-only
+podDnsPolicy: None
+podDnsConfig:
+  nameservers:
+    - "1.1.1.1"
+    - "9.9.9.9"
+prometheus:
+  enabled: false
+  servicemonitor:
+    enabled: false
+    prometheusInstance: monitoring
+
+########################
+# cert-manager subchart
+########################
+
+# CDRs installed as part of CDR application
+cert-manager:
+  installCRDs: false

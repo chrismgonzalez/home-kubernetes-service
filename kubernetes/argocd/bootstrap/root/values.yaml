@@ -1,0 +1,82 @@
+gitops:
+  repo: git@github.com:chrismgonzalez/talos-cluster.git
+  revision: main
+
+# List of application corresponding to different sync waves
+apps:
+# #    CRDs App
+#   - name: crds
+#     namespace: default
+#     path: kubernetes/argocd/bootstrap/crds
+#     syncWave: 0
+# #    External Secrets Operator
+#   - name: external-secrets
+#     namespace: external-secrets
+#     path: kubernetes/argocd/system/external-secrets
+#     syncWave: 1
+# #    Metal LB
+#   - name: metallb
+#     namespace: networking
+#     path: kubernetes/argocd/system/metallb
+#     syncWave: 1
+    # Cert-Manager and Trust Manager
+  - name: cert-manager
+    namespace: cert-manager
+    path: kubernetes/argocd/system/cert-manager
+    syncWave: 1
+    # Linkerd service mesh
+#   - name: linkerd
+#     namespace: linkerd
+#     path: kubernetes/argocd/system/linkerd
+#     syncWave: 3
+#   - name: nginx
+#     namespace: ingress-nginx
+#     path: kubernetes/argocd/system/nginx
+#     syncWave: 4
+#     # Mayastor storage
+#   - name: mayastor
+#     namespace: mayastor
+#     path: kubernetes/argocd/system/mayastor
+#     syncWave: 5
+#   - name: mayastor-disks
+#     namespace: mayastor
+#     path: kubernetes/argocd/system/mayastor-disks
+#     syncWave: 6
+  #   # Velero Backup
+  # - name: velero
+  #   namespace: velero
+  #   path: kubernetes/argocd/system/velero
+  #   syncWave: 5
+  #   # Logging: Loki and EFK stack
+  # - name: logging
+  #   namespace: logging
+  #   path: kubernetes/argocd/system/logging
+  #   syncWave: 6
+  #   # Kube-prometheus-stack
+#   - name: monitoring
+#     namespace: monitoring
+#     path: kubernetes/argocd/system/monitoring
+#     syncWave: 7
+#     helm:
+#       # skip installation kube-prometheus-stack CDRs
+#       skipCrds: true
+  #   # Linkerd-viz
+  # - name: linkerd-viz
+  #   namespace: linkerd-viz
+  #   path: kubernetes/argocd/system/linkerd-viz
+  #   syncWave: 6
+  #   # Tracing: Tempo
+  # - name: tracing
+  #   namespace: tracing
+  #   path: kubernetes/argocd/system/tracing
+  #   syncWave: 6
+  #   # Linkerd-jaeger
+  # - name: linkerd-jaeger
+  #   namespace: linkerd-jaeger
+  #   path: kubernetes/argocd/system/linkerd-jaeger
+  #   syncWave: 6
+    # Argo CD App
+  - name: argocd
+    namespace: argocd
+    path: kubernetes/argocd/bootstrap/argocd/
+    syncWave: 2

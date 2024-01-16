@@ -118,17 +118,23 @@ cluster:
     extraArgs:
       listen-metrics-urls: http://0.0.0.0:2381
   inlineManifests:
-  - name: fluxcd
-    contents: |- 
+  - name: argocd
+    contents: |-
       apiVersion: v1
       kind: Namespace
       metadata:
-          name: flux-system
-          labels:
-            app.kubernetes.io/instance: flux-system
-            app.kubernetes.io/part-of: flux
-            pod-security.kubernetes.io/warn: restricted
-            pod-security.kubernetes.io/warn-version: latest
+          name: argocd
+  # - name: fluxcd
+  #   contents: |- 
+  #     apiVersion: v1
+  #     kind: Namespace
+  #     metadata:
+  #         name: flux-system
+  #         labels:
+  #           app.kubernetes.io/instance: flux-system
+  #           app.kubernetes.io/part-of: flux
+  #           pod-security.kubernetes.io/warn: restricted
+  #           pod-security.kubernetes.io/warn-version: latest
   - name: cilium
     contents: |- 
       apiVersion: v1
@@ -189,6 +195,16 @@ cluster:
         identity: ${base64encode(identity)}
         identity.pub: ${base64encode(identitypub)}
         known_hosts: ${base64encode(knownhosts)}
+  - name: cloudflare-api-token-secret
+    contents: |-
+      apiVersion: v1
+      kind: Secret
+      metadata:
+        name: cloudflare-api-token-secret
+        namespace: cert-manager
+      type: Opaque
+      stringData:
+        api-token: ${base64encode(cf_token)}
   - name: proxmox-cloud-controller-manager
     contents: |-
       apiVersion: v1
@@ -219,6 +235,21 @@ cluster:
         namespace: kube-system
       data:
         config.yaml: ${base64encode(pxcreds)}
+  - name: github-token
+    contents: |-
+    apiVersion: v1
+    kind: Secret
+    metadata:
+      name: home-kubernetes-service
+      namespace: argocd
+      labels:
+        argocd.argoproj.io/secret-type: repository
+    type: Opaque
+    stringData:
+      type: git
+      url: git@github.com:chrismgonzalez/home-kubernetes-service.git
+      password: ${github_token}
+      username: not-used
   - name: metallb-addresspool
     contents: |- 
       apiVersion: metallb.io/v1beta1
@@ -252,6 +283,50 @@ cluster:
         STORAGE_CLASS: ${storageclass}
         STORAGE_CLASS_XFS: ${storageclass-xfs}
         CLUSTER_0_VIP: ${cluster-0-vip} 
+  - name: cloudflare-issuer-staging
+    contents: |-
+      apiVersion: cert-manager.io/v1
+      kind: ClusterIssuer
+      metadata:
+        name: letsencrypt-staging
+      spec:
+        acme:
+          server: https://acme-staging-v02.api.letsencrypt.org/directory
+          email: ${cf_email}
+          privateKeySecretRef:
+            name: letsencrypt-staging
+          solvers:
+            - dns01:
+                cloudflare:
+                  email: ${cf_email}
+                  apiTokenSecretRef:
+                    name: cloudflare-api-token-secret
+                    key: api-token
+              selector:
+                dnsZones:
+                  - ${cf_domain}
+  - name: cloudflare-issuer-prod
+    contents: |-
+      apiVersion: cert-manager.io/v1
+      kind: ClusterIssuer
+      metadata:
+        name: letsencrypt-staging
+      spec:
+        acme:
+          server: https://acme-v02.api.letsencrypt.org/directory
+          email: ${cf_email}
+          privateKeySecretRef:
+            name: letsencrypt-issuer
+          solvers:
+            - dns01:
+                cloudflare:
+                  email: ${cf_email}
+                  apiTokenSecretRef:
+                    name: cloudflare-api-token-secret
+                    key: api-token
+              selector:
+                dnsZones:
+                  - ${cf_domain}      
   externalCloudProvider:
     enabled: true
     manifests:
@@ -262,6 +337,9 @@ cluster:
     - https://raw.githubusercontent.com/chrismgonzalez/home-kubernetes-service/main/manifests/talos/metrics-server.yaml
     # - https://raw.githubusercontent.com/chrismgonzalez/home-kubernetes-service/main/manifests/talos/fluxcd.yaml
     # - https://raw.githubusercontent.com/chrismgonzalez/home-kubernetes-service/main/manifests/talos/flux-install.yaml #repo sync
+    - https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
+    - https://raw.githubusercontent.com/chrismgonzalez/home-kubernetes-service/argocd/manifests/talos/argocd-install.yaml
+    - https://github.com/cert-manager/cert-manager/releases/download/v1.13.3/cert-manager.crds.yaml
     - https://raw.githubusercontent.com/sergelogvinov/terraform-talos/main/_deployments/vars/talos-cloud-controller-manager-result.yaml
     - https://raw.githubusercontent.com/sergelogvinov/proxmox-cloud-controller-manager/main/docs/deploy/cloud-controller-manager-talos.yml
     - https://raw.githubusercontent.com/prometheus-operator/prometheus-operator/v0.64.1/example/prometheus-operator-crd/monitoring.coreos.com_alertmanagerconfigs.yaml
