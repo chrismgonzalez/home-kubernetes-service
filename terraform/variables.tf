@@ -62,7 +62,7 @@ variable "k8s_version" {
 variable "proxmox_host" {
   description = "Proxmox host"
   type        = string
-  default     = "10.10.10.8"
+  # default     = "10.10.10.8"
 }
 
 variable "proxmox_image" {

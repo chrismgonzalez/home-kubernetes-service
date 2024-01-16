@@ -137,12 +137,12 @@ cluster:
           name: cilium
           labels:
             pod-security.kubernetes.io/enforce: "privileged"
-- name: csi-proxmox
+  - name: csi-proxmox
     contents: |- 
       apiVersion: v1
       kind: Namespace
       metadata:
-          name: cilium
+          name: csi-proxmox
           labels:
             pod-security.kubernetes.io/enforce: "privileged"
   - name: d8-system
@@ -256,7 +256,8 @@ cluster:
     enabled: true
     manifests:
     - https://raw.githubusercontent.com/chrismgonzalez/home-kubernetes-service/main/manifests/talos/coredns-local.yaml
-    - https://raw.githubusercontent.com/chrismgonzalez/home-kubernetes-service/main/manifests/talos/cert-approval.yaml
+    - https://raw.githubusercontent.com/alex1989hu/kubelet-serving-cert-approver/v0.7.4/deploy/standalone-install.yaml
+    # - https://raw.githubusercontent.com/chrismgonzalez/home-kubernetes-service/main/manifests/talos/cert-approval.yaml
     - https://raw.githubusercontent.com/chrismgonzalez/home-kubernetes-service/main/manifests/talos/metallb-native.yaml
     - https://raw.githubusercontent.com/chrismgonzalez/home-kubernetes-service/main/manifests/talos/metrics-server.yaml
     - https://raw.githubusercontent.com/chrismgonzalez/home-kubernetes-service/main/manifests/talos/fluxcd.yaml
