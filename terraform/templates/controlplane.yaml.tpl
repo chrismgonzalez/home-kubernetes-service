@@ -240,7 +240,7 @@ cluster:
       stringData:
         type: git
         url: git@github.com:chrismgonzalez/home-kubernetes-service.git
-        password: ${github_token}
+        password: ${base64encode(github_token)}
         username: not-used
   - name: metallb-addresspool
     contents: |- 
