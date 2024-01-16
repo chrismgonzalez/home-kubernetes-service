@@ -40,8 +40,7 @@ create-deployments: ## create templates
         --version 5.52.2 \
         --namespace argocd \
         --dependency-update \
-        --include-crds \
-        --namespace argocd > vars/argocd-result.yaml   
+        --include-crds > vars/argocd-result.yaml   
  
 	# helm template --namespace=kube-system -f vars/metrics-server.yaml metrics-server \
 	# 	metrics-server/metrics-server > vars/metrics-server-result.yaml

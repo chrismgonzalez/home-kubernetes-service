@@ -32,7 +32,7 @@ data "talos_machine_configuration" "mc_1" {
         cf_token         = var.cloudflare_token
         cf_email         = var.cloudflare_email
         cf_domain        = var.cloudflare_domain
-        github_token = var.github_token
+        github_token     = var.github_token
         clusters = yamlencode({
           clusters = [
             {

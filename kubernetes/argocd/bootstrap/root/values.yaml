@@ -1,6 +1,6 @@
 gitops:
-  repo: git@github.com:chrismgonzalez/talos-cluster.git
-  revision: main
+  repo: git@github.com:chrismgonzalez/home-kubernetes-service.git
+  revision: argocd
 
 # List of application corresponding to different sync waves
 apps:
@@ -22,8 +22,8 @@ apps:
     # Cert-Manager and Trust Manager
   - name: cert-manager
     namespace: cert-manager
-    path: kubernetes/argocd/system/cert-manager
-    syncWave: 1
+    path: kubernetes/argocd/system/cert-manager/
+    syncWave: 0
     # Linkerd service mesh
 #   - name: linkerd
 #     namespace: linkerd
@@ -79,4 +79,4 @@ apps:
   - name: argocd
     namespace: argocd
     path: kubernetes/argocd/bootstrap/argocd/
-    syncWave: 2
+    syncWave: 1
