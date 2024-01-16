@@ -237,19 +237,19 @@ cluster:
         config.yaml: ${base64encode(pxcreds)}
   - name: github-token
     contents: |-
-    apiVersion: v1
-    kind: Secret
-    metadata:
-      name: home-kubernetes-service
-      namespace: argocd
-      labels:
-        argocd.argoproj.io/secret-type: repository
-    type: Opaque
-    stringData:
-      type: git
-      url: git@github.com:chrismgonzalez/home-kubernetes-service.git
-      password: ${github_token}
-      username: not-used
+      apiVersion: v1
+      kind: Secret
+      metadata:
+        name: home-kubernetes-service
+        namespace: argocd
+        labels:
+          argocd.argoproj.io/secret-type: repository
+      type: Opaque
+      stringData:
+        type: git
+        url: git@github.com:chrismgonzalez/home-kubernetes-service.git
+        password: ${github_token}
+        username: not-used
   - name: metallb-addresspool
     contents: |- 
       apiVersion: metallb.io/v1beta1
@@ -338,6 +338,7 @@ cluster:
     # - https://raw.githubusercontent.com/chrismgonzalez/home-kubernetes-service/main/manifests/talos/fluxcd.yaml
     # - https://raw.githubusercontent.com/chrismgonzalez/home-kubernetes-service/main/manifests/talos/flux-install.yaml #repo sync
     - https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
+    - https://raw.githubusercontent.com/chrismgonzalez/home-kubernetes-service/argocd/manifests/talos/argocd-result.yaml
     - https://raw.githubusercontent.com/chrismgonzalez/home-kubernetes-service/argocd/manifests/talos/argocd-install.yaml
     - https://github.com/cert-manager/cert-manager/releases/download/v1.13.3/cert-manager.crds.yaml
     - https://raw.githubusercontent.com/sergelogvinov/terraform-talos/main/_deployments/vars/talos-cloud-controller-manager-result.yaml
