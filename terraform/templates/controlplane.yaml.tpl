@@ -178,7 +178,7 @@ cluster:
         namespace: cert-manager
       type: Opaque
       stringData:
-        api-token: ${base64encode(cf_token)}
+        api-token: ${cf_token}
   - name: proxmox-cloud-controller-manager
     contents: |-
       apiVersion: v1
@@ -242,7 +242,7 @@ cluster:
       stringData:
         type: git
         url: https://github.com/chrismgonzalez/home-kubernetes-service
-        password: ${base64encode(github_token)}
+        password: ${github_token}
         username: not-used
   - name: cloudflare-issuer-staging
     contents: |-
