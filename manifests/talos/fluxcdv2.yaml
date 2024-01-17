@@ -10517,6 +10517,7 @@ metadata:
     helm.sh/chart: flux2-2.12.2
     control-plane: controller
   name: notification-controller
+  namespace: flux-system
 spec:
   ports:
   - name: http
@@ -10539,6 +10540,7 @@ metadata:
     helm.sh/chart: flux2-2.12.2
     control-plane: controller
   name: webhook-receiver
+  namespace: flux-system
 spec:
   ports:
   - name: http
@@ -10561,6 +10563,7 @@ metadata:
     helm.sh/chart: flux2-2.12.2
     control-plane: controller
   name: source-controller
+  namespace: flux-system
 spec:
   ports:
   - name: http
@@ -10584,6 +10587,7 @@ metadata:
     helm.sh/chart: flux2-2.12.2
     control-plane: controller
   name: helm-controller
+  namespace: flux-system
 spec:
   replicas: 1
   selector:
@@ -10664,6 +10668,7 @@ metadata:
     helm.sh/chart: flux2-2.12.2
     control-plane: controller
   name: image-automation-controller
+  namespace: flux-system
 spec:
   replicas: 1
   selector:
@@ -10746,6 +10751,7 @@ metadata:
     helm.sh/chart: flux2-2.12.2
     control-plane: controller
   name: image-reflector-controller
+  namespace: flux-system
 spec:
   replicas: 1
   selector:
@@ -10832,6 +10838,7 @@ metadata:
     helm.sh/chart: flux2-2.12.2
     control-plane: controller
   name: kustomize-controller
+  namespace: flux-system
 spec:
   replicas: 1
   selector:
@@ -10914,6 +10921,7 @@ metadata:
     helm.sh/chart: flux2-2.12.2
     control-plane: controller
   name: notification-controller
+  namespace: flux-system
 spec:
   replicas: 1
   selector:
@@ -11000,6 +11008,7 @@ metadata:
     helm.sh/chart: flux2-2.12.2
     control-plane: controller
   name: source-controller
+  namespace: flux-system
 spec:
   replicas: 1
   selector:
@@ -11092,6 +11101,7 @@ metadata:
     app.kubernetes.io/part-of: flux
     helm.sh/chart: flux2-2.12.2
   name: "flux2-flux-check"
+  namespace: flux-system
   annotations:
     "helm.sh/hook": pre-install
     "helm.sh/hook-weight": "-10"
@@ -11102,6 +11112,7 @@ apiVersion: batch/v1
 kind: Job
 metadata:
   name: "flux2-flux-check"
+  namespace: flux-system
   labels:
     app.kubernetes.io/instance: "flux-system"
     app.kubernetes.io/managed-by: "Helm"
