@@ -238,8 +238,7 @@ cluster:
           argocd.argoproj.io/secret-type: repository
       type: Opaque
       stringData:
-        type: git
-        url: git@github.com:chrismgonzalez/home-kubernetes-service.git
+        url: https://github.com/chrismgonzalez/home-kubernetes-service
         password: ${base64encode(github_token)}
         username: not-used
   - name: metallb-addresspool
