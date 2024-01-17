@@ -175,18 +175,6 @@ cluster:
       kind: Namespace
       metadata:
           name: ingress-nginx
-  - name: flux-system-secret
-    contents: |-
-      apiVersion: v1
-      kind: Secret
-      type: Opaque
-      metadata:
-        name: github-creds
-        namespace: flux-system
-      data:
-        identity: ${base64encode(identity)}
-        identity.pub: ${base64encode(identitypub)}
-        known_hosts: ${base64encode(knownhosts)}
   - name: cloudflare-api-token-secret
     contents: |-
       apiVersion: v1
@@ -227,21 +215,6 @@ cluster:
         namespace: kube-system
       data:
         config.yaml: ${base64encode(pxcreds)}
-  - name: argocd-repo-credentials
-    contents: |-
-      apiVersion: v1
-      kind: Secret
-      metadata:
-        name: home-kubernetes-service
-        namespace: argocd
-        labels:
-          argocd.argoproj.io/secret-type: repository
-      type: Opaque
-      stringData:
-        type: git
-        url: https://github.com/chrismgonzalez/home-kubernetes-service
-        password: ${base64encode(github_token)}
-        username: not-used
   - name: metallb-addresspool
     contents: |- 
       apiVersion: metallb.io/v1beta1
@@ -274,7 +247,22 @@ cluster:
         SIDERO_ENDPOINT: ${sidero-endpoint}
         STORAGE_CLASS: ${storageclass}
         STORAGE_CLASS_XFS: ${storageclass-xfs}
-        CLUSTER_0_VIP: ${cluster-0-vip} 
+        CLUSTER_0_VIP: ${cluster-0-vip}
+  - name: argocd-repo-credentials
+    contents: |-
+      apiVersion: v1
+      kind: Secret
+      metadata:
+        name: argocd-repo-credentials
+        namespace: argocd
+        labels:
+          argocd.argoproj.io/secret-type: repository
+      type: Opaque
+      stringData:
+        type: git
+        url: https://github.com/chrismgonzalez/home-kubernetes-service
+        password: ${base64encode(github_token)}
+        username: not-used
   - name: cloudflare-issuer-staging
     contents: |-
       apiVersion: cert-manager.io/v1
