@@ -9,4 +9,4 @@ reclaimPolicy: Delete
 parameters:
   csi.storage.k8s.io/fstype: ext4
   storage: {{ .Values.storage.storage_ext4 }}
-  ssd: {{ .Values.ssd }}
+  ssd: "false"

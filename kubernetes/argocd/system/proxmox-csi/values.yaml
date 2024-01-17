@@ -1,4 +1,3 @@
 storage:
   storage_xfs: foo
   storage_ext4: vm-data
-ssd: "false"
