@@ -4,26 +4,20 @@ gitops:
 
 # List of application corresponding to different sync waves
 apps:
-# #    CRDs App
-#   - name: crds
-#     namespace: default
-#     path: kubernetes/argocd/bootstrap/crds
-#     syncWave: 0
-# #    External Secrets Operator
-#   - name: external-secrets
-#     namespace: external-secrets
-#     path: kubernetes/argocd/system/external-secrets
-#     syncWave: 1
-# #    Metal LB
-#   - name: metallb
-#     namespace: networking
-#     path: kubernetes/argocd/system/metallb
-#     syncWave: 1
     # Cert-Manager and Trust Manager
   - name: cert-manager
     namespace: cert-manager
     path: kubernetes/argocd/system/cert-manager/
     syncWave: 0
+  - name: argocd
+    namespace: argocd
+    path: kubernetes/argocd/bootstrap/argocd/
+    syncWave: 1
+# #    External Secrets Operator
+#   - name: external-secrets
+#     namespace: external-secrets
+#     path: kubernetes/argocd/system/external-secrets
+#     syncWave: 1
     # Linkerd service mesh
 #   - name: linkerd
 #     namespace: linkerd
@@ -75,8 +69,3 @@ apps:
   #   namespace: linkerd-jaeger
   #   path: kubernetes/argocd/system/linkerd-jaeger
   #   syncWave: 6
-    # Argo CD App
-  - name: argocd
-    namespace: argocd
-    path: kubernetes/argocd/bootstrap/argocd/
-    syncWave: 1
