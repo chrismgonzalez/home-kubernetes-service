@@ -157,12 +157,6 @@ cluster:
       kind: Namespace
       metadata:
           name: external-dns
-  - name: kasten
-    contents: |- 
-      apiVersion: v1
-      kind: Namespace
-      metadata:
-          name: kasten-io
   - name: cert-manager
     contents: |- 
       apiVersion: v1
@@ -235,19 +229,6 @@ cluster:
       spec:
         ipAddressPools:
         - first-pool
-  - name: flux-vars
-    contents: |- 
-      apiVersion: v1
-      kind: ConfigMap
-      metadata:
-        namespace: flux-system
-        name: cluster-settings
-      data:
-        CACHE_REGISTRY: ${registry-endpoint}
-        SIDERO_ENDPOINT: ${sidero-endpoint}
-        STORAGE_CLASS: ${storageclass}
-        STORAGE_CLASS_XFS: ${storageclass-xfs}
-        CLUSTER_0_VIP: ${cluster-0-vip}
   - name: argocd-repo-credentials
     contents: |-
       apiVersion: v1
