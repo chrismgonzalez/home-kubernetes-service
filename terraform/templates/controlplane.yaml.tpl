@@ -287,7 +287,20 @@ cluster:
                     key: api-token
               selector:
                 dnsZones:
-                  - ${cf_domain}      
+                  - ${cf_domain}
+  - name: argocd-vars
+    contents: |- 
+      apiVersion: v1
+      kind: ConfigMap
+      metadata:
+        namespace: argocd
+        name: cluster-settings
+      data:
+        CACHE_REGISTRY: ${registry-endpoint}
+        SIDERO_ENDPOINT: ${sidero-endpoint}
+        STORAGE_CLASS: ${storageclass}
+        STORAGE_CLASS_XFS: ${storageclass-xfs}
+        CLUSTER_0_VIP: ${cluster-0-vip}       
   externalCloudProvider:
     enabled: true
     manifests:

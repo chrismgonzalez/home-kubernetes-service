@@ -48,3 +48,6 @@ create-kubeconfig: ## Prepare kubeconfig
 
 reset-config: ## delete config director
 	rm -rf _cfgs/
+
+get-argocd-secret: # get argocd admin secret
+	argocd admin initial-secret -n argocd 

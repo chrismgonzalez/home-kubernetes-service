@@ -9,14 +9,21 @@ apps:
     namespace: cert-manager
     path: kubernetes/argocd/system/cert-manager/
     syncWave: 0
+    # nginx
   - name: nginx
     namespace: ingress-nginx
     path: kubernetes/argocd/system/nginx
     syncWave: 1
+    # dhcp
+  - name: dhcp
+    namespace: kube-system
+    path: kubernetes/argocd/system/dhcp
+    syncWave: 2
+    # argocd app
   - name: argocd
     namespace: argocd
     path: kubernetes/argocd/bootstrap/argocd/
-    syncWave: 2
+    syncWave: 3
 # #    External Secrets Operator
 #   - name: external-secrets
 #     namespace: external-secrets

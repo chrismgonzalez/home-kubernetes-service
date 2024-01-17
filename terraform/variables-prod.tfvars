@@ -27,6 +27,6 @@ kubernetes = {
   metallb_l2_addressrange = "10.1.1.30-10.1.1.35" # metallb L2 configuration ip range
   registry-endpoint       = "10.1.1.151"          # set registry url for cache image pull
   # FLUX ConfigMap settings
-  sidero-endpoint = "10.1.1.30"
+  sidero-endpoint = "10.1.1.25"
   cluster-0-vip   = "10.1.1.40"
 }
