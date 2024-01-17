@@ -11,7 +11,7 @@ metadata:
 spec:
   destination:
     namespace: {{ $app.namespace }}
-    server: https://svc.cluster.local
+    server: https://kubernetes.default.svc
   project: default
   source:
     path: {{ $app.path }}
