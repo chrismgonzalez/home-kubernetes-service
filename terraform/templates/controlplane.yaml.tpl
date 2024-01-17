@@ -227,7 +227,7 @@ cluster:
         namespace: kube-system
       data:
         config.yaml: ${base64encode(pxcreds)}
-  - name: github-token
+  - name: argocd-repo-credentials
     contents: |-
       apiVersion: v1
       kind: Secret
@@ -238,6 +238,7 @@ cluster:
           argocd.argoproj.io/secret-type: repository
       type: Opaque
       stringData:
+        type: git
         url: https://github.com/chrismgonzalez/home-kubernetes-service
         password: ${base64encode(github_token)}
         username: not-used
