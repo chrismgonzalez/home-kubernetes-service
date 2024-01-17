@@ -1,5 +1,5 @@
 gitops:
-  repo: git@github.com:chrismgonzalez/home-kubernetes-service.git
+  repo: https://github.com/chrismgonzalez/home-kubernetes-service
   revision: argocd
 
 # List of application corresponding to different sync waves
