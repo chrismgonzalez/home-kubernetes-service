@@ -14,19 +14,20 @@ apps:
     namespace: ingress-nginx
     path: kubernetes/argocd/system/nginx
     syncWave: 1
-  - name: proxmox-csi
-    namespace: csi-proxmox
-    path: kubernetes/argocd/system/proxmox-csi
+  # - name: proxmox-csi
+  #   namespace: csi-proxmox
+  #   path: kubernetes/argocd/system/proxmox-csi
+  #   syncWave: 2
     # dhcp
   - name: dhcp
     namespace: kube-system
     path: kubernetes/argocd/system/dhcp
-    syncWave: 2
+    syncWave: 3
     # argocd app
   - name: argocd
     namespace: argocd
     path: kubernetes/argocd/bootstrap/argocd/
-    syncWave: 3
+    syncWave: 4
 # #    External Secrets Operator
 #   - name: external-secrets
 #     namespace: external-secrets
