@@ -9,10 +9,14 @@ apps:
     namespace: cert-manager
     path: kubernetes/argocd/system/cert-manager/
     syncWave: 0
+  - name: nginx
+    namespace: ingress-nginx
+    path: kubernetes/argocd/system/nginx
+    syncWave: 1
   - name: argocd
     namespace: argocd
     path: kubernetes/argocd/bootstrap/argocd/
-    syncWave: 1
+    syncWave: 2
 # #    External Secrets Operator
 #   - name: external-secrets
 #     namespace: external-secrets
@@ -23,10 +27,6 @@ apps:
 #     namespace: linkerd
 #     path: kubernetes/argocd/system/linkerd
 #     syncWave: 3
-#   - name: nginx
-#     namespace: ingress-nginx
-#     path: kubernetes/argocd/system/nginx
-#     syncWave: 4
 #     # Mayastor storage
 #   - name: mayastor
 #     namespace: mayastor

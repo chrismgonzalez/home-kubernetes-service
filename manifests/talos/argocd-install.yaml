@@ -11,7 +11,7 @@ spec:
   project: default
   source:
     path: kubernetes/argocd/bootstrap/root
-    repoURL: git@github.com:chrismgonzalez/home-kubernetes-service.git
+    repoURL: https://github.com/chrismgonzalez/home-kubernetes-service
     targetRevision: argocd
   syncPolicy:
     automated:
