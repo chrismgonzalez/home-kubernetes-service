@@ -7,7 +7,7 @@ metadata:
 spec:
   destination:
     namespace: argocd
-    server: https://svc.cluster.local
+    server: https://kubernetes.default.svc
   project: default
   source:
     path: kubernetes/argocd/bootstrap/root
