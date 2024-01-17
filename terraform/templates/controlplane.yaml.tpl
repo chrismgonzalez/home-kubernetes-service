@@ -256,8 +256,8 @@ cluster:
     enabled: true
     manifests:
     - https://raw.githubusercontent.com/chrismgonzalez/home-kubernetes-service/main/manifests/talos/coredns-local.yaml
-    # - https://raw.githubusercontent.com/alex1989hu/kubelet-serving-cert-approver/v0.7.4/deploy/standalone-install.yaml
-    - https://raw.githubusercontent.com/chrismgonzalez/home-kubernetes-service/main/manifests/talos/cert-approval.yaml
+    - https://raw.githubusercontent.com/alex1989hu/kubelet-serving-cert-approver/v0.7.4/deploy/standalone-install.yaml
+    # - https://raw.githubusercontent.com/chrismgonzalez/home-kubernetes-service/main/manifests/talos/cert-approval.yaml
     - https://raw.githubusercontent.com/chrismgonzalez/home-kubernetes-service/main/manifests/talos/metallb-native.yaml
     - https://raw.githubusercontent.com/chrismgonzalez/home-kubernetes-service/main/manifests/talos/metrics-server.yaml
     - https://raw.githubusercontent.com/chrismgonzalez/home-kubernetes-service/main/manifests/talos/fluxcdv2.yaml
