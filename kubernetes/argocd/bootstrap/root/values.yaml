@@ -14,10 +14,10 @@ apps:
     namespace: ingress-nginx
     path: kubernetes/argocd/system/nginx
     syncWave: 1
-  # - name: proxmox-csi
-  #   namespace: csi-proxmox
-  #   path: kubernetes/argocd/system/proxmox-csi
-  #   syncWave: 2
+  - name: proxmox-csi
+    namespace: csi-proxmox
+    path: kubernetes/argocd/system/proxmox-csi
+    syncWave: 2
     # dhcp
   # - name: dhcp
   #   namespace: kube-system

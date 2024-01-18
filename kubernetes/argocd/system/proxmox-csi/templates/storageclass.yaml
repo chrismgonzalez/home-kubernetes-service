@@ -1,7 +1,7 @@
 apiVersion: storage.k8s.io/v1
 kind: StorageClass
 metadata:
-  name: proxmox-data
+  name: proxmox-storage
 provisioner: csi.proxmox.sinextra.dev
 allowVolumeExpansion: true
 volumeBindingMode: WaitForFirstConsumer
