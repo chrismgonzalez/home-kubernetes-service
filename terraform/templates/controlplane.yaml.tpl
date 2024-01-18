@@ -31,6 +31,7 @@ machine:
         aliases:
           - ${apiDomain} 
     nameservers:
+      - 10.10.10.1
       - 1.1.1.1
       - 8.8.8.8
     kubespan:
