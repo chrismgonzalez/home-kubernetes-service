@@ -91,6 +91,17 @@ variable "proxmox_token_secret" {
   type        = string
 }
 
+variable "proxmox_storage_token_secret" {
+  description = "Proxmox token secret"
+  type        = string
+}
+
+variable "proxmox_insecure" {
+  description = "Proxmox insecure API auth"
+  type = bool
+  default = false
+}
+
 variable "first_ip" {
   type = string
 }
