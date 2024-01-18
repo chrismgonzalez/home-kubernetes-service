@@ -6,6 +6,6 @@ spec:
   attachRequired: true
   podInfoOnMount: true
   storageCapacity: true
-  SeLinuxMount: false
+  seLinuxMount: false
   volumeLifecycleModes:
   - Persistent
