@@ -15,14 +15,6 @@ machine:
     clusterDNS:
       - 169.254.2.53
       - ${cidrhost(split(",",serviceSubnets)[0], 10)}
-    extraMounts:
-      - destination: /var/lib/longhorn
-        type: bind
-        source: /var/lib/longhorn
-        options: 
-          - bind
-          - rshared
-          - rw  
   network:
     hostname: "${hostname}"
     interfaces:
@@ -121,25 +113,6 @@ cluster:
       name: custom
       urls:
         - https://raw.githubusercontent.com/chrismgonzalez/home-kubernetes-service/main/manifests/talos/cilium-result.yaml
-  apiServer:
-    admissionControl:
-      - name: PodSecurity
-        configuration:
-          apiVersion: pod-security.admission.config.k8s.io/v1alpha1
-          defaults:
-              audit: restricted
-              audit-version: latest
-              enforce: baseline
-              enforce-version: latest
-              warn: restricted
-              warn-version: latest
-          exemptions:
-              namespaces:
-                  - kube-system
-                  - longhorn-system
-              runtimeClasses: []
-              usernames: []
-            kind: PodSecurityConfiguration
   proxy:
     disabled: true
   etcd:
@@ -152,6 +125,14 @@ cluster:
       kind: Namespace
       metadata:
           name: argocd
+  - name: longhorn-system
+    contents: |- 
+      apiVersion: v1
+      kind: Namespace
+      metadata:
+          name: longhorn-system
+          labels:
+            pod-security.kubernetes.io/enforce: "privileged"
   - name: cilium
     contents: |- 
       apiVersion: v1
@@ -305,19 +286,6 @@ cluster:
               selector:
                 dnsZones:
                   - ${cf_domain}
-  - name: argocd-vars
-    contents: |- 
-      apiVersion: v1
-      kind: ConfigMap
-      metadata:
-        namespace: argocd
-        name: cluster-settings
-      data:
-        CACHE_REGISTRY: ${registry-endpoint}
-        SIDERO_ENDPOINT: ${sidero-endpoint}
-        STORAGE_CLASS: ${storageclass}
-        STORAGE_CLASS_XFS: ${storageclass-xfs}
-        CLUSTER_0_VIP: ${cluster-0-vip}       
   externalCloudProvider:
     enabled: true
     manifests:
