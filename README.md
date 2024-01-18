@@ -47,3 +47,10 @@ ip route
 
 The initial `terraform apply` may fail when creating harbor registries, simply run the apply again and it should work.
 
+# Troubleshoot internal networking
+
+Running the below command will start a pod in the cluster network that will allow you to run networking commands such as `ping`, `tcpdump`, `dig`
+
+```
+$ kubectl run tmp-shell --rm -i --tty --image nicolaka/netshoot
+```
