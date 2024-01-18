@@ -19,10 +19,10 @@ apps:
     path: kubernetes/argocd/system/proxmox-csi
     syncWave: 2
     # dhcp
-  - name: dhcp
-    namespace: kube-system
-    path: kubernetes/argocd/system/dhcp
-    syncWave: 3
+  # - name: dhcp
+  #   namespace: kube-system
+  #   path: kubernetes/argocd/system/dhcp
+  #   syncWave: 3
     # argocd app
   - name: argocd
     namespace: argocd
