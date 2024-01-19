@@ -98,8 +98,8 @@ variable "proxmox_storage_token_secret" {
 
 variable "proxmox_insecure" {
   description = "Proxmox insecure API auth"
-  type = bool
-  default = false
+  type        = bool
+  default     = false
 }
 
 variable "first_ip" {

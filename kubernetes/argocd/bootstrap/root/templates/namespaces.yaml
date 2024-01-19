@@ -27,6 +27,15 @@ metadata:
     pod-security.kubernetes.io/audit: baseline
     pod-security.kubernetes.io/warn: baseline
 
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: longhorn-system
+  labels:
+    pod-security.kubernetes.io/enforce: baseline
+    pod-security.kubernetes.io/audit: baseline
+    pod-security.kubernetes.io/warn: baseline
+
 # #linkerd-viz namespace
 # kind: Namespace
 # apiVersion: v1

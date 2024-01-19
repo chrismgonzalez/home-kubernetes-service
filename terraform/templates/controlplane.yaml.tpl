@@ -8,6 +8,14 @@ machine:
     - ${ipv4_vip}
     - ${ipv4_local}
   kubelet:
+    extraMounts:
+      - destination: /var/lib/longhorn
+        type: bind
+        source: /var/lib/longhorn
+        options:
+          - bind
+          - rshared
+          - rw
     defaultRuntimeSeccompProfileEnabled: true # Enable container runtime default Seccomp profile.
     disableManifestsDirectory: true # The `disableManifestsDirectory` field configures the kubelet to get static pod manifests from the /etc/kubernetes/manifests directory.
     extraArgs:
@@ -133,6 +141,8 @@ cluster:
           name: longhorn-system
           labels:
             pod-security.kubernetes.io/enforce: "privileged"
+            pod-security.kubernetes.io/audit: "privileged"
+            pod-security.kubernetes.io/warn: "privileged"
   - name: cilium
     contents: |- 
       apiVersion: v1
@@ -141,20 +151,20 @@ cluster:
           name: cilium
           labels:
             pod-security.kubernetes.io/enforce: "privileged"
-  - name: csi-proxmox
-    contents: |- 
-      apiVersion: v1
-      kind: Namespace
-      metadata:
-          name: csi-proxmox
-          labels:
-            pod-security.kubernetes.io/enforce: "privileged"
-  - name: external-dns
-    contents: |- 
-      apiVersion: v1
-      kind: Namespace
-      metadata:
-          name: external-dns
+  # - name: csi-proxmox
+  #   contents: |- 
+  #     apiVersion: v1
+  #     kind: Namespace
+  #     metadata:
+  #         name: csi-proxmox
+  #         labels:
+  #           pod-security.kubernetes.io/enforce: "privileged"
+  # - name: external-dns
+  #   contents: |- 
+  #     apiVersion: v1
+  #     kind: Namespace
+  #     metadata:
+  #         name: external-dns
   - name: cert-manager
     contents: |- 
       apiVersion: v1
