@@ -6,35 +6,39 @@ helm-repos: ## add helm repos
 	helm repo add cilium               https://helm.cilium.io/
 	helm repo add metrics-server       https://kubernetes-sigs.github.io/metrics-server/
 	helm repo add ingress-nginx        https://kubernetes.github.io/ingress-nginx
-    helm repo add argo                 https://argoproj.github.io/argo-helm
+  helm repo add argo                 https://argoproj.github.io/argo-helm
 	helm repo update
 
 create-deployments: ## create templates
-	helm template cilium \
-    cilium/cilium \
-    --version 1.14.5 \
-    --namespace cilium \
-    --set ipam.mode=kubernetes \
-    --set tunnel=disabled \
-    --set bpf.masquerade=true \
-    --set endpointRoutes.enabled=true \
-    --set kubeProxyReplacement=strict \
-    --set autoDirectNodeRoutes=true \
-    --set localRedirectPolicy=true \
-    --set operator.rollOutPods=true \
-    --set rollOutCiliumPods=true \
-    --set ipv4NativeRoutingCIDR="10.244.0.0/16" \
-    --set hubble.relay.enabled=true \
-    --set hubble.ui.enabled=true \
-    --set securityContext.capabilities.ciliumAgent="{CHOWN,KILL,NET_ADMIN,NET_RAW,IPC_LOCK,SYS_ADMIN,SYS_RESOURCE,DAC_OVERRIDE,FOWNER,SETGID,SETUID}" \
-    --set=securityContext.capabilities.cleanCiliumState="{NET_ADMIN,SYS_ADMIN,SYS_RESOURCE}" \
-    --set=cgroup.autoMount.enabled=false \
-    --set=cgroup.hostRoot=/sys/fs/cgroup \
-    --set=k8sServiceHost="api.cluster.local" \
-    --set=k8sServicePort="6443" > vars/cilium-result.yaml
+	# helm template cilium \
+    # cilium/cilium \
+    # --version 1.14.5 \
+    # --namespace cilium \
+    # --set ipam.mode=kubernetes \
+    # --set tunnel=disabled \
+    # --set bpf.masquerade=true \
+    # --set endpointRoutes.enabled=true \
+    # --set kubeProxyReplacement=strict \
+    # --set autoDirectNodeRoutes=true \
+    # --set localRedirectPolicy=true \
+    # --set operator.rollOutPods=true \
+    # --set rollOutCiliumPods=true \
+    # --set ipv4NativeRoutingCIDR="10.244.0.0/16" \
+    # --set hubble.relay.enabled=true \
+    # --set hubble.ui.enabled=true \
+    # --set securityContext.capabilities.ciliumAgent="{CHOWN,KILL,NET_ADMIN,NET_RAW,IPC_LOCK,SYS_ADMIN,SYS_RESOURCE,DAC_OVERRIDE,FOWNER,SETGID,SETUID}" \
+    # --set=securityContext.capabilities.cleanCiliumState="{NET_ADMIN,SYS_ADMIN,SYS_RESOURCE}" \
+    # --set=cgroup.autoMount.enabled=false \
+    # --set=cgroup.hostRoot=/sys/fs/cgroup \
+    # --set=k8sServiceHost="api.cluster.local" \
+    # --set=k8sServicePort="6443" > vars/cilium-result.yaml
 		
+
 	helm template --namespace=kube-system  --version=1.14.5 -f vars/cilium.yaml cilium \
 		cilium/cilium > vars/cilium-result.yaml
+
+	# helm template --namespace=kube-system  --version=1.14.5 -f vars/cilium.yaml cilium \
+	# 	cilium/cilium > vars/cilium-result.yaml
 
     helm template argocd argo/argo-cd \ 
         --version 5.52.2 \
