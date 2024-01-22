@@ -39,7 +39,6 @@ machine:
         aliases:
           - ${apiDomain} 
     nameservers:
-      - 10.10.10.1
       - 1.1.1.1
       - 8.8.8.8
     kubespan:
@@ -151,14 +150,6 @@ cluster:
           name: cilium
           labels:
             pod-security.kubernetes.io/enforce: "privileged"
-  # - name: csi-proxmox
-  #   contents: |- 
-  #     apiVersion: v1
-  #     kind: Namespace
-  #     metadata:
-  #         name: csi-proxmox
-  #         labels:
-  #           pod-security.kubernetes.io/enforce: "privileged"
   # - name: external-dns
   #   contents: |- 
   #     apiVersion: v1
@@ -187,36 +178,6 @@ cluster:
       type: Opaque
       stringData:
         api-token: ${cf_token}
-  - name: proxmox-cloud-controller-manager
-    contents: |-
-      apiVersion: v1
-      kind: Secret
-      type: Opaque
-      metadata:
-        name: proxmox-cloud-controller-manager
-        namespace: kube-system
-      data:
-        config.yaml: ${base64encode(clusters)}
-  - name: proxmox-csi-plugin
-    contents: |-
-      apiVersion: v1
-      kind: Secret
-      type: Opaque
-      metadata:
-        name: proxmox-csi-plugin
-        namespace: csi-proxmox
-      data:
-        config.yaml: ${base64encode(clusters)}
-  - name: proxmox-operator-creds
-    contents: |-
-      apiVersion: v1
-      kind: Secret
-      type: Opaque
-      metadata:
-        name: proxmox-operator-creds
-        namespace: kube-system
-      data:
-        config.yaml: ${base64encode(pxcreds)}
   - name: metallb-addresspool
     contents: |- 
       apiVersion: metallb.io/v1beta1
@@ -306,8 +267,6 @@ cluster:
     - https://raw.githubusercontent.com/chrismgonzalez/home-kubernetes-service/argocd/manifests/talos/argocd-result.yaml
     - https://raw.githubusercontent.com/chrismgonzalez/home-kubernetes-service/argocd/manifests/talos/argocd-install.yaml
     - https://github.com/cert-manager/cert-manager/releases/download/v1.13.3/cert-manager.crds.yaml
-    - https://raw.githubusercontent.com/sergelogvinov/terraform-talos/main/_deployments/vars/talos-cloud-controller-manager-result.yaml
-    - https://raw.githubusercontent.com/sergelogvinov/proxmox-cloud-controller-manager/main/docs/deploy/cloud-controller-manager-talos.yml
     - https://raw.githubusercontent.com/prometheus-operator/prometheus-operator/v0.64.1/example/prometheus-operator-crd/monitoring.coreos.com_alertmanagerconfigs.yaml
     - https://raw.githubusercontent.com/prometheus-operator/prometheus-operator/v0.64.1/example/prometheus-operator-crd/monitoring.coreos.com_alertmanagers.yaml
     - https://raw.githubusercontent.com/prometheus-operator/prometheus-operator/v0.64.1/example/prometheus-operator-crd/monitoring.coreos.com_podmonitors.yaml
