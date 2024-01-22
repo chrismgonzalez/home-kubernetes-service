@@ -1,0 +1,119 @@
+# Create annotated namespaces
+# Adding Linkerd annotations
+
+# linkerd namespace
+# kind: Namespace
+# apiVersion: v1
+# metadata:
+#   name: linkerd
+#   annotations:
+#     linkerd.io/inject: disabled
+#   labels:
+#     linkerd.io/is-control-plane: "true"
+#     config.linkerd.io/admission-webhooks: disabled
+#     linkerd.io/control-plane-ns: linkerd
+#     pod-security.kubernetes.io/audit: privileged
+#     pod-security.kubernetes.io/enforce: privileged
+#     pod-security.kubernetes.io/warn: privileged
+
+# ---
+
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: csi-proxmox
+  labels:
+    pod-security.kubernetes.io/enforce: privileged
+    pod-security.kubernetes.io/audit: baseline
+    pod-security.kubernetes.io/warn: baseline
+
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: longhorn-system
+  labels:
+    pod-security.kubernetes.io/enforce: baseline
+    pod-security.kubernetes.io/audit: baseline
+    pod-security.kubernetes.io/warn: baseline
+
+# #linkerd-viz namespace
+# kind: Namespace
+# apiVersion: v1
+# metadata:
+#   name: linkerd-viz
+#   annotations:
+#     linkerd.io/inject: enabled
+#     config.linkerd.io/proxy-await: "enabled"
+#   labels:
+#     linkerd.io/extension: viz
+
+# ---
+
+# # logging namespace
+# kind: Namespace
+# apiVersion: v1
+# metadata:
+#   name: logging
+#   annotations:
+#     linkerd.io/inject: enabled
+---
+# monitoring
+# kind: Namespace
+# apiVersion: v1
+# metadata:
+#   name: monitoring
+#   annotations:
+#     linkerd.io/inject: disabled
+#     pod-security.kubernetes.io/audit: privileged
+#     pod-security.kubernetes.io/enforce: privileged
+#     pod-security.kubernetes.io/warn: privileged
+# ---
+# # tracing
+# kind: Namespace
+# apiVersion: v1
+# metadata:
+#   name: tracing
+#   annotations:
+#     linkerd.io/inject: enabled
+
+# ---
+# # kafka namespace
+# kind: Namespace
+# apiVersion: v1
+# metadata:
+#   name: kafka
+#   annotations:
+#     linkerd.io/inject: enabled
+
+---
+# # Networking namespace
+# kind: Namespace
+# apiVersion: v1
+# metadata:
+#   name: networking
+#   labels:
+#     pod-security.kubernetes.io/audit: privileged
+#     pod-security.kubernetes.io/enforce: privileged
+#     pod-security.kubernetes.io/warn: privileged
+
+# ---
+# # Networking namespace
+# kind: Namespace
+# apiVersion: v1
+# metadata:
+#   name: ingress-nginx
+#   labels:
+#     pod-security.kubernetes.io/audit: privileged
+#     pod-security.kubernetes.io/enforce: privileged
+#     pod-security.kubernetes.io/warn: privileged
+
+# ---
+# # Mayastor namespace
+# kind: Namespace
+# apiVersion: v1
+# metadata:
+#   name: mayastor
+#   labels:
+#     pod-security.kubernetes.io/audit: privileged
+#     pod-security.kubernetes.io/enforce: privileged
+#     pod-security.kubernetes.io/warn: privileged

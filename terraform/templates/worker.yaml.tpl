@@ -4,6 +4,14 @@ machine:
     topology.kubernetes.io/region: ${px_region}
     topology.kubernetes.io/zone: ${px_node}
   kubelet:
+    extraMounts:
+        - destination: /var/lib/longhorn
+          type: bind
+          source: /var/lib/longhorn
+          options:
+            - bind
+            - rshared
+            - rw
     defaultRuntimeSeccompProfileEnabled: true # Enable container runtime default Seccomp profile.
     disableManifestsDirectory: true # The `disableManifestsDirectory` field configures the kubelet to get static pod manifests from the /etc/kubernetes/manifests directory.
     extraArgs:
@@ -12,7 +20,7 @@ machine:
       node-labels: "project.io/node-pool=worker"
     clusterDNS:
       - 169.254.2.53
-      - ${cidrhost(split(",",serviceSubnets)[0], 10)}
+      - ${cidrhost(split(",",serviceSubnets)[0], 10)} 
   network:
     hostname: "${hostname}"
     interfaces:
@@ -27,6 +35,7 @@ machine:
         aliases:
           - ${apiDomain} 
     nameservers:
+      - 10.10.10.1
       - 1.1.1.1
       - 8.8.8.8
     kubespan:

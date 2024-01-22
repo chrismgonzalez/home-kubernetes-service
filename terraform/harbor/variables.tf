@@ -54,29 +54,29 @@ variable "gateway" {
 
 variable "cache_registry_ip" {
   description = "Proxy cache registry ip address"
-  type = string
+  type        = string
 }
 
 variable "proxmox_registry_image" {
   description = "Proxy cache registry image template"
-  default = "harbor-ubuntu"
-  type = string
+  default     = "harbor-ubuntu"
+  type        = string
 }
 
 variable "enable_cache_registry" {
   description = "Enable proxy cache container registry deployment"
-  type = bool
-  default = true
+  type        = bool
+  default     = true
 }
 
 variable "harbor_admin_password" {
   description = "Admin password for Harbor container registry"
-  type = string
-  default = "admin"
+  type        = string
+  default     = "admin"
 }
 
 variable "harbor_vmid" {
   description = "VM ID for Harbor"
-  type = string
-  default = "200"
+  type        = string
+  default     = "200"
 }

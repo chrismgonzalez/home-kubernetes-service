@@ -37,7 +37,7 @@ resource "proxmox_vm_qemu" "controlplanes" {
   disk {
     type    = "scsi"
     storage = var.proxmox_storage2
-    size    = "15G"
+    size    = "32G"
     # cache   = "writethrough"
     # ssd     = 1
     backup = false

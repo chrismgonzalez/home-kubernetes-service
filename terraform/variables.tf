@@ -91,6 +91,17 @@ variable "proxmox_token_secret" {
   type        = string
 }
 
+variable "proxmox_storage_token_secret" {
+  description = "Proxmox token secret"
+  type        = string
+}
+
+variable "proxmox_insecure" {
+  description = "Proxmox insecure API auth"
+  type        = bool
+  default     = false
+}
+
 variable "first_ip" {
   type = string
 }
@@ -124,4 +135,28 @@ variable "public_key_file_path" {
 
 variable "known_hosts" {
   type = string
+}
+
+variable "cloudflare_token" {
+  type        = string
+  description = "API token for Cloudflare DNS zone"
+  sensitive   = true
+}
+
+variable "cloudflare_email" {
+  type        = string
+  description = "Email used for cloudflare account"
+  sensitive   = true
+}
+
+variable "cloudflare_domain" {
+  type        = string
+  description = "domain (DNS zone) used for cloudflare account"
+  sensitive   = true
+}
+
+variable "github_token" {
+  type        = string
+  description = "Github personall access token for ArgoCD"
+  sensitive   = true
 }

@@ -4,13 +4,13 @@ resource "proxmox_vm_qemu" "container-registry" {
   clone       = var.proxmox_registry_image
   vmid        = var.harbor_vmid
 
-  agent                   = 1
-  define_connection_info  = false
-  os_type                 = "cloud-init"
-  qemu_os                 = "l26"
-  ipconfig0               = "ip=${var.cache_registry_ip}/24,gw=${var.gateway}"
-  ciuser     = "ubuntu"
-  cipassword = "ubuntu"
+  agent                  = 1
+  define_connection_info = false
+  os_type                = "cloud-init"
+  qemu_os                = "l26"
+  ipconfig0              = "ip=${var.cache_registry_ip}/24,gw=${var.gateway}"
+  ciuser                 = "ubuntu"
+  cipassword             = "ubuntu"
 
   onboot  = false
   cpu     = "kvm64,flags=+aes"
@@ -35,8 +35,8 @@ resource "proxmox_vm_qemu" "container-registry" {
     cache   = "writethrough"
     backup  = false
     #https://github.com/Telmate/terraform-provider-proxmox/issues/704
-    file    = "vm-${var.harbor_vmid}-disk-0"
-    volume  = "vm-data:vm-${var.harbor_vmid}-disk-0"
+    file   = "vm-${var.harbor_vmid}-disk-0"
+    volume = "vm-data:vm-${var.harbor_vmid}-disk-0"
   }
   lifecycle {
     ignore_changes = [
@@ -65,12 +65,12 @@ resource "proxmox_vm_qemu" "container-registry" {
       "sed -e '/prvate_key:*/ s/^#*/#/' -i harbor.yml",
       "sudo ./install.sh",
       "sleep 15s"
-    ]    
+    ]
     connection {
-      type = "ssh"
-      user = "ubuntu"
+      type     = "ssh"
+      user     = "ubuntu"
       password = "ubuntu"
-      host = "${var.cache_registry_ip}"
+      host     = var.cache_registry_ip
     }
   }
 }

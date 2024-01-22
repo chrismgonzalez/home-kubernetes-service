@@ -1,0 +1,3 @@
+Longhorn has not released their helm chart for v1.6.0 yet.  Longhorn is working as expected with proper labels on the namespace.
+
+TODO: Copy manifests from Helm chart and create one here temporarily until chart @v1.6.0 is officially released

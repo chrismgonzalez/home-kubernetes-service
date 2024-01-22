@@ -8,6 +8,14 @@ machine:
     - ${ipv4_vip}
     - ${ipv4_local}
   kubelet:
+    extraMounts:
+      - destination: /var/lib/longhorn
+        type: bind
+        source: /var/lib/longhorn
+        options:
+          - bind
+          - rshared
+          - rw
     defaultRuntimeSeccompProfileEnabled: true # Enable container runtime default Seccomp profile.
     disableManifestsDirectory: true # The `disableManifestsDirectory` field configures the kubelet to get static pod manifests from the /etc/kubernetes/manifests directory.
     extraArgs:
@@ -118,17 +126,22 @@ cluster:
     extraArgs:
       listen-metrics-urls: http://0.0.0.0:2381
   inlineManifests:
-  - name: fluxcd
+  - name: argocd
+    contents: |-
+      apiVersion: v1
+      kind: Namespace
+      metadata:
+          name: argocd
+  - name: longhorn-system
     contents: |- 
       apiVersion: v1
       kind: Namespace
       metadata:
-          name: flux-system
+          name: longhorn-system
           labels:
-            app.kubernetes.io/instance: flux-system
-            app.kubernetes.io/part-of: flux
-            pod-security.kubernetes.io/warn: restricted
-            pod-security.kubernetes.io/warn-version: latest
+            pod-security.kubernetes.io/enforce: "privileged"
+            pod-security.kubernetes.io/audit: "privileged"
+            pod-security.kubernetes.io/warn: "privileged"
   - name: cilium
     contents: |- 
       apiVersion: v1
@@ -137,34 +150,12 @@ cluster:
           name: cilium
           labels:
             pod-security.kubernetes.io/enforce: "privileged"
-  - name: csi-proxmox
-    contents: |- 
-      apiVersion: v1
-      kind: Namespace
-      metadata:
-          name: csi-proxmox
-          labels:
-            pod-security.kubernetes.io/enforce: "privileged"
-  - name: d8-system
-    contents: |- 
-      apiVersion: v1
-      kind: Namespace
-      metadata:
-          name: d8-system
-          labels:
-            pod-security.kubernetes.io/enforce: "privileged"
-  - name: external-dns
-    contents: |- 
-      apiVersion: v1
-      kind: Namespace
-      metadata:
-          name: external-dns
-  - name: kasten
-    contents: |- 
-      apiVersion: v1
-      kind: Namespace
-      metadata:
-          name: kasten-io
+  # - name: external-dns
+  #   contents: |- 
+  #     apiVersion: v1
+  #     kind: Namespace
+  #     metadata:
+  #         name: external-dns
   - name: cert-manager
     contents: |- 
       apiVersion: v1
@@ -177,48 +168,16 @@ cluster:
       kind: Namespace
       metadata:
           name: ingress-nginx
-  - name: flux-system-secret
+  - name: cloudflare-api-token-secret
     contents: |-
       apiVersion: v1
       kind: Secret
-      type: Opaque
       metadata:
-        name: github-creds
-        namespace: flux-system
-      data:
-        identity: ${base64encode(identity)}
-        identity.pub: ${base64encode(identitypub)}
-        known_hosts: ${base64encode(knownhosts)}
-  - name: proxmox-cloud-controller-manager
-    contents: |-
-      apiVersion: v1
-      kind: Secret
+        name: cloudflare-api-token-secret
+        namespace: cert-manager
       type: Opaque
-      metadata:
-        name: proxmox-cloud-controller-manager
-        namespace: kube-system
-      data:
-        config.yaml: ${base64encode(clusters)}
-  - name: proxmox-csi-plugin
-    contents: |-
-      apiVersion: v1
-      kind: Secret
-      type: Opaque
-      metadata:
-        name: proxmox-csi-plugin
-        namespace: csi-proxmox
-      data:
-        config.yaml: ${base64encode(clusters)}
-  - name: proxmox-operator-creds
-    contents: |-
-      apiVersion: v1
-      kind: Secret
-      type: Opaque
-      metadata:
-        name: proxmox-operator-creds
-        namespace: kube-system
-      data:
-        config.yaml: ${base64encode(pxcreds)}
+      stringData:
+        api-token: ${cf_token}
   - name: metallb-addresspool
     contents: |- 
       apiVersion: metallb.io/v1beta1
@@ -239,31 +198,75 @@ cluster:
       spec:
         ipAddressPools:
         - first-pool
-  - name: flux-vars
-    contents: |- 
+  - name: argocd-repo-credentials
+    contents: |-
       apiVersion: v1
-      kind: ConfigMap
+      kind: Secret
       metadata:
-        namespace: flux-system
-        name: cluster-settings
-      data:
-        CACHE_REGISTRY: ${registry-endpoint}
-        SIDERO_ENDPOINT: ${sidero-endpoint}
-        STORAGE_CLASS: ${storageclass}
-        STORAGE_CLASS_XFS: ${storageclass-xfs}
-        CLUSTER_0_VIP: ${cluster-0-vip} 
+        name: argocd-repo-credentials
+        namespace: argocd
+        labels:
+          argocd.argoproj.io/secret-type: repository
+      type: Opaque
+      stringData:
+        type: git
+        url: https://github.com/chrismgonzalez/home-kubernetes-service
+        password: ${github_token}
+        username: not-used
+  - name: cloudflare-issuer-staging
+    contents: |-
+      apiVersion: cert-manager.io/v1
+      kind: ClusterIssuer
+      metadata:
+        name: letsencrypt-staging
+      spec:
+        acme:
+          server: https://acme-staging-v02.api.letsencrypt.org/directory
+          email: ${cf_email}
+          privateKeySecretRef:
+            name: letsencrypt-staging
+          solvers:
+            - dns01:
+                cloudflare:
+                  email: ${cf_email}
+                  apiTokenSecretRef:
+                    name: cloudflare-api-token-secret
+                    key: api-token
+              selector:
+                dnsZones:
+                  - ${cf_domain}
+  - name: cloudflare-issuer-prod
+    contents: |-
+      apiVersion: cert-manager.io/v1
+      kind: ClusterIssuer
+      metadata:
+        name: letsencrypt-staging
+      spec:
+        acme:
+          server: https://acme-v02.api.letsencrypt.org/directory
+          email: ${cf_email}
+          privateKeySecretRef:
+            name: letsencrypt-issuer
+          solvers:
+            - dns01:
+                cloudflare:
+                  email: ${cf_email}
+                  apiTokenSecretRef:
+                    name: cloudflare-api-token-secret
+                    key: api-token
+              selector:
+                dnsZones:
+                  - ${cf_domain}
   externalCloudProvider:
     enabled: true
     manifests:
     - https://raw.githubusercontent.com/chrismgonzalez/home-kubernetes-service/main/manifests/talos/coredns-local.yaml
     - https://raw.githubusercontent.com/alex1989hu/kubelet-serving-cert-approver/v0.7.4/deploy/standalone-install.yaml
-    # - https://raw.githubusercontent.com/chrismgonzalez/home-kubernetes-service/main/manifests/talos/cert-approval.yaml
     - https://raw.githubusercontent.com/chrismgonzalez/home-kubernetes-service/main/manifests/talos/metallb-native.yaml
     - https://raw.githubusercontent.com/chrismgonzalez/home-kubernetes-service/main/manifests/talos/metrics-server.yaml
-    - https://raw.githubusercontent.com/chrismgonzalez/home-kubernetes-service/main/manifests/talos/fluxcd.yaml
-    - https://raw.githubusercontent.com/chrismgonzalez/home-kubernetes-service/main/manifests/talos/flux-install.yaml #repo sync
-    - https://raw.githubusercontent.com/sergelogvinov/terraform-talos/main/_deployments/vars/talos-cloud-controller-manager-result.yaml
-    - https://raw.githubusercontent.com/sergelogvinov/proxmox-cloud-controller-manager/main/docs/deploy/cloud-controller-manager-talos.yml
+    - https://raw.githubusercontent.com/chrismgonzalez/home-kubernetes-service/argocd/manifests/talos/argocd-result.yaml
+    - https://raw.githubusercontent.com/chrismgonzalez/home-kubernetes-service/argocd/manifests/talos/argocd-install.yaml
+    - https://github.com/cert-manager/cert-manager/releases/download/v1.13.3/cert-manager.crds.yaml
     - https://raw.githubusercontent.com/prometheus-operator/prometheus-operator/v0.64.1/example/prometheus-operator-crd/monitoring.coreos.com_alertmanagerconfigs.yaml
     - https://raw.githubusercontent.com/prometheus-operator/prometheus-operator/v0.64.1/example/prometheus-operator-crd/monitoring.coreos.com_alertmanagers.yaml
     - https://raw.githubusercontent.com/prometheus-operator/prometheus-operator/v0.64.1/example/prometheus-operator-crd/monitoring.coreos.com_podmonitors.yaml

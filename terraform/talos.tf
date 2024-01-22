@@ -29,11 +29,16 @@ data "talos_machine_configuration" "mc_1" {
         px_node          = var.target_node_name
         storageclass     = var.proxmox_storage2
         storageclass-xfs = var.proxmox_storage1
+        cf_token         = var.cloudflare_token
+        cf_email         = var.cloudflare_email
+        cf_domain        = var.cloudflare_domain
+        github_token     = var.github_token
         clusters = yamlencode({
           clusters = [
             {
               token_id     = var.proxmox_token_id
-              token_secret = var.proxmox_token_secret
+              insecure     = var.proxmox_insecure
+              token_secret = var.proxmox_storage_token_secret
               url          = var.proxmox_host
               region       = var.region
             },
@@ -43,6 +48,7 @@ data "talos_machine_configuration" "mc_1" {
           clusters = {
             cluster-1 = {
               api_token_id     = var.proxmox_token_id
+              insecure         = var.proxmox_insecure
               api_token_secret = var.proxmox_token_secret
               api_url          = var.proxmox_host
               pool             = var.pool
